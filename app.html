@@ -889,7 +889,7 @@
         });
 
         function proceedWithForm() {
-            // 3. Generowanie URL (mapowanie nazw na te, które używa card.js)
+            // Zbierz wszystkie dane z formularza
             const nameMap = {
                 family_name: "familyName",
                 father_family_name: "fathersFamilyName",
@@ -897,7 +897,7 @@
                 birth_country: "countryOfBirth"
             };
 
-            const params = [];
+            const cardData = {};
             const allInputs = form.querySelectorAll('input, select');
 
             for (const input of allInputs) {
@@ -907,12 +907,12 @@
 
                 let value = input.value || "";
 
-                // birthday -> DD.MM.RRRR (card.js expects string with dots)
+                // birthday -> DD.MM.RRRR
                 if (rawKey === 'birthday') {
-                    value = formatDateForURL(input.value); // converts YYYY-MM-DD -> DD.MM.YYYY
+                    value = formatDateForURL(input.value);
                 }
 
-                // sex -> card.js expects 'm' or 'k' (lowercase)
+                // sex -> card.html expects 'm' or 'k'
                 if (rawKey === 'sex') {
                     const v = (value || "").toString().toLowerCase();
                     if (v.indexOf('kob') !== -1 || v.indexOf('k') === 0) {
@@ -922,21 +922,70 @@
                     }
                 }
 
-                // image hidden input: use stored image data
+                // image: użyj base64
                 if (rawKey === 'image' && imageURLInput.value) {
                     value = imageURLInput.value;
                 }
 
-                // map keys like family_name -> familyName etc.
+                // mapuj klucze (family_name -> familyName itd.)
                 const finalKey = nameMap[rawKey] || rawKey;
-
-                // encode and push
-                params.push(`${finalKey}=${encodeURIComponent(value)}`);
+                cardData[finalKey] = value;
             }
 
-            // redirect do card.html
-            const targetUrl = `card.html?${params.join('&')}`;
-            window.location.href = targetUrl;
+            // Upewnij się, że sex jest zapisany też jako bardziej czytelna wartość
+            // ale zachowaj oryginał dla card.html
+            const sexVal = cardData['sex'] || 'm';
+
+            // === ZAPIS DO localStorage – KLUCZ GŁÓWNY (card.html to czyta) ===
+            // Konwersja z aliasów app.html -> nazwy które card.html czyta
+            const cardDataForStorage = {
+                name: cardData['name'] || '',
+                surname: cardData['surname'] || '',
+                sex: sexVal,
+                birthday: cardData['birthday'] || '',
+                pesel: cardData['pesel'] || '',
+                mdow_series: cardData['mdow_series'] || '',
+                issue_date: cardData['issue_date'] || '',
+                expiry_date: cardData['expiry_date'] || '',
+                father_name: cardData['father_name'] || '',
+                mother_name: cardData['mother_name'] || '',
+                nationality: cardData['nationality'] || 'POLSKIE',
+                birthPlace: cardData['birthPlace'] || '',
+                birth_country: cardData['countryOfBirth'] || cardData['birth_country'] || 'Polska',
+                countryOfBirth: cardData['countryOfBirth'] || 'Polska',
+                adress1: cardData['adress1'] || '',
+                adress2: cardData['adress2'] || '',
+                city: cardData['city'] || '',
+                home_date: cardData['home_date'] || '',
+                family_name: cardData['family_name'] || cardData['familyName'] || '',
+                familyName: cardData['familyName'] || cardData['family_name'] || '',
+                fathersFamilyName: cardData['fathersFamilyName'] || cardData['father_family_name'] || '',
+                father_family_name: cardData['father_family_name'] || cardData['fathersFamilyName'] || '',
+                mothersFamilyName: cardData['mothersFamilyName'] || cardData['mother_family_name'] || '',
+                mother_family_name: cardData['mother_family_name'] || cardData['mothersFamilyName'] || '',
+                photoUrl: cardData['image'] || '',
+                image: cardData['image'] || ''
+            };
+
+            try {
+                // Zapis głównego JSON
+                localStorage.setItem('mobywatel_card_data', JSON.stringify(cardDataForStorage));
+                // Zapis indywidualnych kluczy (fallback dla card.html)
+                localStorage.setItem('name', cardDataForStorage.name);
+                localStorage.setItem('surname', cardDataForStorage.surname);
+                localStorage.setItem('pesel', cardDataForStorage.pesel);
+                localStorage.setItem('birthDay', cardDataForStorage.birthday);
+                localStorage.setItem('birthday', cardDataForStorage.birthday);
+                if (cardDataForStorage.photoUrl) {
+                    localStorage.setItem('image', cardDataForStorage.photoUrl);
+                    localStorage.setItem('photoUrl', cardDataForStorage.photoUrl);
+                }
+            } catch(err) {
+                console.error('Błąd zapisu localStorage:', err);
+            }
+
+            // Przekieruj do card.html BEZ URL params (dane są w localStorage)
+            window.location.href = 'card.html';
         }
     </script>
 <script src="assets/logger.js"></script>
