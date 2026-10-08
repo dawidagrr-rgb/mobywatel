@@ -462,6 +462,38 @@
             }
 
             applyDataToDOM(finalData);
+
+            // Jeśli brak danych (PWA localStorage pusty) - pokaż overlay z przyciskiem do generatora
+            const noData = (!data.name || data.name === 'YOBYWATEL' || data.name === 'BRAK DANYCH' || data.name === '') &&
+                           (!data.surname || data.surname === 'YOBYWATEL' || data.surname === 'BRAK DANYCH' || data.surname === '');
+            if (noData && !document.getElementById('setupOverlay')) {
+                const overlay = document.createElement('div');
+                overlay.id = 'setupOverlay';
+                overlay.style.cssText = [
+                    'position:fixed','top:0','left:0','right:0','bottom:0',
+                    'background:rgba(10,13,18,0.98)','z-index:99999',
+                    'display:flex','flex-direction:column','align-items:center','justify-content:center',
+                    'gap:18px','padding:32px'
+                ].join(';');
+                overlay.innerHTML = `
+                    <img src="assets/images/eagle.png" style="width:64px;opacity:0.75;filter:drop-shadow(0 0 16px rgba(225,29,72,0.4))">
+                    <p style="color:#ffffff;font-size:21px;font-weight:700;text-align:center;margin:0;letter-spacing:-0.4px">Brak danych mDowodu</p>
+                    <p style="color:#64748b;font-size:14px;text-align:center;margin:0;line-height:1.5;max-width:280px">
+                        Uzupełnij swoje dane osobowe, aby móc korzystać z mDowodu.<br><br>
+                        <span style="color:#94a3b8;font-size:12px">Dane są zapisywane lokalnie i nie opuszczają urządzenia.</span>
+                    </p>
+                    <button onclick="window.location.href='index.html'" style="
+                        background:linear-gradient(135deg,#e11d48,#be123c);color:#fff;border:none;
+                        padding:15px 36px;border-radius:12px;font-size:16px;font-weight:700;
+                        cursor:pointer;width:100%;max-width:320px;
+                        box-shadow:0 6px 20px rgba(225,29,72,0.4);letter-spacing:0.5px;
+                    ">Uzupełnij dane</button>
+                    <p style="color:#475569;font-size:11px;text-align:center;margin:0">
+                        Po uzupełnieniu dane zostaną zapamiętane na tym urządzeniu
+                    </p>
+                `;
+                document.body.appendChild(overlay);
+            }
         }
 
         loadCardData();

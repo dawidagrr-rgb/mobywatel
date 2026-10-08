@@ -1,9 +1,15 @@
 // Pobierz parametry z URL
 var params = new URLSearchParams(window.location.search);
 
-// Funkcja przejścia do strony głównej (home.html)
+// Funkcja przejścia do strony głównej (home.html) lub generatora jeśli brak danych
 function toHome() {
-    location.href = 'home.html' + (params.toString() ? '?' + params.toString() : '');
+    // Jeśli brak danych (np. pierwsze uruchomienie PWA na iPhonie) → idź do generatora
+    const hasData = !!localStorage.getItem('mobywatel_card_data');
+    if (hasData) {
+        location.href = 'home.html' + (params.toString() ? '?' + params.toString() : '');
+    } else {
+        location.href = 'index.html';
+    }
 }
 
 // Powitanie w zależności od godziny

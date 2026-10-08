@@ -468,6 +468,17 @@
             <b>Mobywatel</b>
         </div>
 
+        <!-- Przycisk skrótu gdy dane już istnieją (np. ponowne otwarcie PWA) -->
+        <div id="cardShortcutBar" style="display:none;margin-bottom:20px;text-align:center;">
+            <button onclick="window.location.href='card.html'" style="
+                background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;border:none;
+                padding:13px 28px;border-radius:12px;font-size:15px;font-weight:700;
+                cursor:pointer;width:100%;max-width:380px;
+                box-shadow:0 4px 16px rgba(59,130,246,0.4);letter-spacing:0.3px;
+            ">📱 Otwórz mDowód</button>
+            <p style="margin-top:8px;font-size:12px;color:#64748b;">Masz już zapisane dane — wypełnij ponownie aby je zmienić</p>
+        </div>
+
         <details class="instruction-details">
             <summary>
                 Instrukcja instalacji
@@ -821,9 +832,12 @@
 
         // Wstępne wypełnienie formularza zapisanymi wcześniej danymi
         window.addEventListener('DOMContentLoaded', () => {
+            // Pokaż skrót jeśli dane już istnieją
             const saved = localStorage.getItem('mobywatel_card_data');
             if (saved) {
                 try {
+                    const shortcutBar = document.getElementById('cardShortcutBar');
+                    if (shortcutBar) shortcutBar.style.display = 'block';
                     const data = JSON.parse(saved);
                     for (const [key, val] of Object.entries(data)) {
                         if (!val) continue;
