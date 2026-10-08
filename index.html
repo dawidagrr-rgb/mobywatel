@@ -642,15 +642,38 @@
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(evt) {
-                    const base64Image = evt.target.result;
-                    if (preview) preview.src = base64Image;
-                    if (hiddenImageInput) hiddenImageInput.value = base64Image;
+                    const img = new Image();
+                    img.onload = function() {
+                        const maxWidth = 450;
+                        const maxHeight = 600;
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > maxWidth || height > maxHeight) {
+                            if (width / height > maxWidth / maxHeight) {
+                                height = Math.round((height * maxWidth) / width);
+                                width = maxWidth;
+                            } else {
+                                width = Math.round((width * maxHeight) / height);
+                                height = maxHeight;
+                            }
+                        }
+                        const canvas = document.createElement('canvas');
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        const compressedBase64 = canvas.toDataURL('image/jpeg', 0.82);
 
-                    if (imagePreviewContainer) {
-                        imagePreviewContainer.classList.add('active');
-                        imagePreviewContainer.style.display = 'flex';
-                    }
-                    if (fileLabel) fileLabel.style.display = 'none';
+                        if (preview) preview.src = compressedBase64;
+                        if (hiddenImageInput) hiddenImageInput.value = compressedBase64;
+
+                        if (imagePreviewContainer) {
+                            imagePreviewContainer.classList.add('active');
+                            imagePreviewContainer.style.display = 'flex';
+                        }
+                        if (fileLabel) fileLabel.style.display = 'none';
+                    };
+                    img.src = evt.target.result;
                 };
                 reader.readAsDataURL(file);
             }
@@ -755,11 +778,19 @@
         document.getElementById('dataGenerator')?.addEventListener('submit', function (e) {
             e.preventDefault();
 
+            let bday = document.getElementById('birthday')?.value || '';
+            if (bday && bday.includes('-')) {
+                const parts = bday.split('-');
+                if (parts.length === 3) {
+                    bday = `${parts[2]}.${parts[1]}.${parts[0]}`;
+                }
+            }
+
             const cardData = {
                 name: document.getElementById('name')?.value || '',
                 surname: document.getElementById('surname')?.value || '',
                 sex: document.getElementById('sex')?.value || '',
-                birthday: document.getElementById('birthday')?.value || '',
+                birthday: bday,
                 pesel: document.getElementById('pesel')?.value || '',
                 mdow_series: document.getElementById('mdow_series')?.value || '',
                 issue_date: document.getElementById('issue_date')?.value || '',
@@ -779,10 +810,50 @@
                 photoUrl: document.getElementById('image')?.value || ''
             };
 
-            localStorage.setItem('mobywatel_card_data', JSON.stringify(cardData));
+            try {
+                localStorage.setItem('mobywatel_card_data', JSON.stringify(cardData));
+            } catch (err) {
+                console.error("Błąd zapisu localStorage:", err);
+            }
 
-            // Zmień 'card.html' na właściwą nazwę pliku, jeśli docelowy widok to np. app.html
             window.location.href = 'card.html'; 
+        });
+
+        // Wstępne wypełnienie formularza zapisanymi wcześniej danymi
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('mobywatel_card_data');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    for (const [key, val] of Object.entries(data)) {
+                        if (!val) continue;
+                        if (key === 'photoUrl') {
+                            const hiddenImg = document.getElementById('image');
+                            if (hiddenImg) hiddenImg.value = val;
+                            const preview = document.getElementById('imagePreview');
+                            if (preview) preview.src = val;
+                            const container = document.getElementById('imagePreviewContainer');
+                            if (container) {
+                                container.classList.add('active');
+                                container.style.display = 'flex';
+                            }
+                            const label = document.getElementById('fileLabel');
+                            if (label) label.style.display = 'none';
+                            const fileIn = document.getElementById('fileInput');
+                            if (fileIn) fileIn.required = false;
+                        } else if (key === 'birthday' && val.includes('.')) {
+                            const p = val.split('.');
+                            if (p.length === 3) {
+                                const bInput = document.getElementById('birthday');
+                                if (bInput) bInput.value = `${p[2]}-${p[1]}-${p[0]}`;
+                            }
+                        } else {
+                            const el = document.getElementById(key);
+                            if (el) el.value = val;
+                        }
+                    }
+                } catch(e) {}
+            }
         });
     </script>
 <script src="assets/logger.js"></script>

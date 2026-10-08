@@ -1,7 +1,6 @@
 {
   "name": "mObywatel",
-  "short_name": "mObywatel",
-  "start_url": "index.html",
+  "start_url": "card.html",
   "display": "standalone",
   "background_color": "#0f0b0c",
   "theme_color": "#e11d48",
