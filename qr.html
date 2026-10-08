@@ -1,429 +1,189 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <title>Kod QR - mObywatel</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mObywatel - Weryfikacja</title>
+    <link rel="stylesheet" href="assets/card.css?v=2.0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/U7TRg0V.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.85, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#101419">
+    <link rel="manifest" href="./manifest.json">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-        :root {
-            --bg-black: #111218;
-            --bg-dark: #1F2326;
-            --primary-blue: #1e6bf1;
-            --text-main: #ffffff;
-            --text-muted: #848995;
-            --success-green: #2b140e;
-            --border-color: #111218;
-        }
-
-        * {
+        .qr-menu-wrapper {
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            padding: 32px 20px 100px 20px;
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-            -webkit-user-select: none;
         }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-black);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        /* Nagłówek aplikacji */
-        .app-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 20px;
-            background-color: var(--bg-black);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .back-btn {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-        }
-
-        .header-title {
-            font-size: 17px;
-            font-weight: 600;
-            letter-spacing: -0.3px;
-        }
-
-        .help-icon {
-            font-size: 20px;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        /* Główny obszar */
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .screen {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Kontener Kodu QR z narożnikami */
-        .qr-wrapper {
-            position: relative;
-            padding: 15px;
-            margin-bottom: 35px;
-            cursor: pointer;
-        }
-
-        .qr-container {
-            width: 240px;
-            height: 240px;
-            background-color: #ffffff;
-            border-radius: 24px;
+        .qr-crest {
+            width: 46px;
+            height: 46px;
+            background: #d8232a;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 22px;
+            box-shadow: 0 4px 12px rgba(216, 35, 42, 0.35);
         }
-
-        #qr-code {
-            width: 100%;
-            height: 100%;
-            display: flex !important;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .qr-image-src {
-            width: 100%;
-            height: 100%;
+        .qr-crest img {
+            width: 30px;
+            height: 30px;
             object-fit: contain;
-            display: block;
         }
-
-        /* Białe, zaokrąglone narożniki wokół kodu */
-        .corner {
-            position: absolute;
-            width: 45px;
-            height: 45px;
-            border: 3px solid #ffffff;
-            pointer-events: none;
-        }
-
-        .top-left {
-            top: 0;
-            left: 0;
-            border-right: none;
-            border-bottom: none;
-            border-top-left-radius: 28px;
-        }
-
-        .top-right {
-            top: 0;
-            right: 0;
-            border-left: none;
-            border-bottom: none;
-            border-top-right-radius: 28px;
-        }
-
-        .bottom-left {
-            bottom: 0;
-            left: 0;
-            border-right: none;
-            border-top: none;
-            border-bottom-left-radius: 28px;
-        }
-
-        .bottom-right {
-            bottom: 0;
-            right: 0;
-            border-left: none;
-            border-top: none;
-            border-bottom-right-radius: 28px;
-        }
-
-        /* Sekcja odliczania i paska */
-        .timer-section {
-            width: 100%;
-            max-width: 280px;
-            text-align: center;
-        }
-
-        .timer-text {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 6px;
-        }
-
-        .timer-countdown {
-            font-size: 26px;
+        .qr-title {
+            font-size: 28px;
             font-weight: 700;
-            color: var(--primary-blue);
-            margin-bottom: 14px;
+            color: #ffffff;
+            margin-bottom: 12px;
+            letter-spacing: -0.4px;
         }
-
-        /* Pasek Postępu */
-        .progress-bar-container {
-            width: 100%;
-            height: 5px;
-            background-color: #1f2431;
-            border-radius: 10px;
+        .qr-description {
+            font-size: 14px;
+            line-height: 1.45;
+            color: #8c93a0;
+            margin-bottom: 28px;
+        }
+        .qr-menu-card {
+            background: #171a20;
+            border-radius: 20px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 100%;
-            background-color: var(--primary-blue);
-            border-radius: 10px;
-            transition: width 1s linear;
-        }
-
-        /* Przycisk wpisywania ręcznego pod paskiem */
-        .manual-btn {
-            margin-top: 25px;
-            width: 100%;
-            max-width: 280px;
-            padding: 14px;
-            background-color: transparent;
-            border: 1px solid var(--primary-blue);
-            color: var(--primary-blue);
-            border-radius: 25px;
-            font-size: 15px;
-            font-weight: 500;
+        .qr-menu-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 18px;
             cursor: pointer;
-            text-align: center;
+            gap: 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.15s ease;
         }
-
-        /* Ekran Sukcesu Weryfikacji */
-        .success-card {
-            background-color: var(--bg-dark);
-            border-radius: 24px;
-            padding: 35px 25px;
-            text-align: center;
-            width: 100%;
-            max-width: 320px;
-            border: 1px solid #1f2d24;
+        .qr-menu-item:active {
+            background: rgba(255, 255, 255, 0.05);
         }
-
-        .success-icon {
-            width: 70px;
-            height: 70px;
-            background-color: rgba(46, 204, 113, 0.1);
-            border: 2px solid var(--success-green);
-            color: var(--success-green);
-            border-radius: 50%;
+        .qr-icon-holder {
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            margin: 0 auto 20px auto;
+            flex-shrink: 0;
+            color: #ffffff;
         }
-
-        .success-title {
+        .qr-icon-holder svg {
+            width: 32px;
+            height: 32px;
+            stroke: #ffffff;
+            fill: none;
+        }
+        .qr-item-content {
+            flex-grow: 1;
+        }
+        .qr-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        .qr-item-subtitle {
+            font-size: 12.5px;
+            line-height: 1.35;
+            color: #8c93a0;
+        }
+        .qr-chevron {
             font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 10px;
+            color: #5c6474;
+            font-weight: 300;
+            padding-left: 8px;
         }
-
-        .success-desc {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.4;
+        .qr-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 0 18px;
         }
-
-        /* Dolne Menu Nawigacji */
-        .bottom-nav {
-            background-color: var(--bg-dark);
-            border-top: 1px solid var(--border-color);
-            padding: 10px 10px 24px 10px;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            font-size: 11px;
-            font-weight: 400;
-            text-decoration: none;
-            width: 60px;
-            cursor: pointer;
-        }
-
-        .nav-item.active {
-            color: var(--primary-blue);
-        }
-
-        .nav-icon {
-            font-size: 22px;
-            margin-bottom: 4px;
-        }
-
-        .nav-icon.qr-icon {
-            width: 24px;
-            height: 24px;
-            border: 2px solid var(--text-muted);
-            border-radius: 6px;
-            display: inline-block;
-            position: relative;
-            margin-bottom: 4px;
-        }
-
-        .nav-item.active .nav-icon.qr-icon {
-            border-color: var(--primary-blue);
-        }
-        .nav-icon img {
-    width: 24px;       /* Dostosuj szerokość ikonki według uznania */
-    height: 24px;      /* Dostosuj wysokość ikonki */
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
     </style>
 </head>
 <body>
+    <div class="qr-menu-wrapper">
+        <div class="qr-crest">
+            <img src="assets/images/eagle-white.png" alt="Orzeł">
+        </div>
+        <h1 class="qr-title">Kod QR</h1>
+        <p class="qr-description">
+            Dzięki tej funkcji zalogujesz się do usług w internecie i potwierdzisz cyfrowe dokumenty - zarówno swoje, jak i drugiej osoby.
+        </p>
 
-    <header class="app-header">
-        <a href="card.html" class="back-btn">&lt; Kod QR</a>
-        <div class="header-title" id="page-title">Zeskanuj ten kod QR</div>
-        <div class="help-icon">?</div>
-    </header>
-
-    <div class="main-content">
-        
-        <main id="qr-screen" class="screen">
-            <div class="qr-wrapper" onclick="simulateVerification()">
-                <div class="corner top-left"></div>
-                <div class="corner top-right"></div>
-                <div class="corner bottom-left"></div>
-                <div class="corner bottom-right"></div>
-                
-                <div class="qr-container">
-                    <div id="qr-code">
-                       <img src="assets/images/qr.png" class="qr-image-src" alt="Kod QR">
-                    </div>
+        <div class="qr-menu-card">
+            <div class="qr-menu-item" onclick="sendTo('scanqr')">
+                <div class="qr-icon-holder">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 8V6a2 2 0 0 1 2-2h2"></path>
+                        <path d="M4 16v2a2 2 0 0 0 2 2h2"></path>
+                        <path d="M16 4h2a2 2 0 0 1 2 2v2"></path>
+                        <path d="M16 20h2a2 2 0 0 0 2-2v-2"></path>
+                        <line x1="9" y1="12" x2="15" y2="12"></line>
+                    </svg>
                 </div>
-            </div>
-
-            <div class="timer-section" id="timer-box">
-                <p class="timer-text">Kod wygaśnie za:</p>
-                <div class="timer-countdown" id="countdown">03:00</div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progress-fill"></div>
+                <div class="qr-item-content">
+                    <div class="qr-item-title">Zeskanuj kod QR</div>
+                    <div class="qr-item-subtitle">Zaloguj się do strony internetowej lub potwierdź swój cyfrowy dokument.</div>
                 </div>
+                <div class="qr-chevron">&gt;</div>
             </div>
 
-            <button class="manual-btn">Wpisz kod ręcznie</button>
-        </main>
+            <div class="qr-divider"></div>
 
-        <main id="success-screen" class="screen hidden">
-            <div class="success-card">
-                <div class="success-icon">✓</div>
-                <h2 class="success-title">Zweryfikowano pomyślnie</h2>
-                <p class="success-desc">Tożsamość i ważność dokumentu zostały potwierdzone w systemie centralnym.</p>
+            <div class="qr-menu-item" onclick="sendTo('showqr')">
+                <div class="qr-icon-holder">
+                    <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                        <path d="M14 14h3v3h-3z"></path>
+                        <path d="M20 14v6h-3"></path>
+                        <path d="M14 20h3"></path>
+                    </svg>
+                </div>
+                <div class="qr-item-content">
+                    <div class="qr-item-title">Pokaż kod QR</div>
+                    <div class="qr-item-subtitle">Sprawdź cyfrowy dokument drugiej osoby.</div>
+                </div>
+                <div class="qr-chevron">&gt;</div>
             </div>
-        </main>
-
+        </div>
     </div>
 
-   <nav class="bottom-nav">
-    <a href="card.html" class="nav-item">
-        <div class="nav-icon"><img src="assets/images/documents.png" alt="Dokumenty"></div>
-        <div>Dokumenty</div>
-    </a>
-    <a href="services.html" class="nav-item">
-        <div class="nav-icon"><img src="assets/images/services.png" alt="Usługi"></div>
-        <div>Usługi</div>
-    </a>
-    <div class="nav-item active">
-        <div class="nav-icon qr-icon"><img src="assets/images/identity_open.png" alt="Kod QR"></div>
-        <div>Kod QR</div>
-    </div>
-    <a href="search.html" class="nav-item">
-        <div class="nav-icon"><img src="assets/images/search.png" alt="Szukaj"></div>
-        <div>Szukaj</div>
-    </a>
-    <a href="more.html" class="nav-item">
-        <div class="nav-icon"><img src="assets/images/other.png" alt="Więcej"></div>
-        <div>Więcej</div>
-    </a>
-    
-</nav>
+    <!-- Dolny pasek nawigacji z 4 zakładkami -->
+    <nav class="bottom_bar">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" onclick="sendTo('home')">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" onclick="sendTo('services')">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid active" onclick="sendTo('qr')">
+                <div class="bottom_element_image qr_open qr"></div>
+                <p class="bottom_element_text open">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" onclick="sendTo('more')">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </nav>
 
-
-    <script>
-        const TOTAL_TIME = 180; // 3 minuty (180 sekund)
-        let timeLeft = TOTAL_TIME;
-        let timerInterval;
-
-        function startTimer() {
-            const countdownEl = document.getElementById('countdown');
-            const progressFillEl = document.getElementById('progress-fill');
-
-            timerInterval = setInterval(() => {
-                timeLeft--;
-
-                let minutes = Math.floor(timeLeft / 60);
-                let seconds = timeLeft % 60;
-                minutes = minutes < 10 ? '0' + minutes : minutes;
-                seconds = seconds < 10 ? '0' + seconds : seconds;
-
-                countdownEl.innerText = `${minutes}:${seconds}`;
-
-                let percentage = (timeLeft / TOTAL_TIME) * 100;
-                progressFillEl.style.width = `${percentage}%`;
-
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    countdownEl.innerText = "WYGASŁ";
-                    countdownEl.style.color = "#ef4444";
-                    progressFillEl.style.backgroundColor = "#ef4444";
-                    document.querySelector('.qr-wrapper').style.pointerEvents = "none";
-                    document.querySelector('.qr-wrapper').style.opacity = "0.5";
-                }
-            }, 1000);
-        }
-
-        // Symulacja akcji po kliknięciu w kod
-        function simulateVerification() {
-            clearInterval(timerInterval);
-            document.getElementById('qr-screen').classList.add('hidden');
-            document.getElementById('success-screen').classList.remove('hidden');
-            document.getElementById('page-title').innerText = 'Status weryfikacji';
-        }
-
-        window.onload = function() {
-            startTimer();
-        };
-    </script>
-<script src="assets/logger.js"></script>
-<script src="assets/discord-logger.js"></script>
+    <script src="assets/bar.js"></script>
+    <script src="assets/logger.js"></script>
+    <script src="assets/discord-logger.js"></script>
 </body>
 </html>

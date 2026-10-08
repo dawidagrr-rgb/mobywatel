@@ -1,81 +1,106 @@
 // Pobierz parametry z URL
 var params = new URLSearchParams(window.location.search);
 
-// Obsługa kliknięcia przycisku login
-document.querySelector(".login").addEventListener('click', () => {
-    toHome();
-});
+// Funkcja przejścia do strony głównej (home.html)
+function toHome() {
+    location.href = 'home.html' + (params.toString() ? '?' + params.toString() : '');
+}
 
 // Powitanie w zależności od godziny
 var welcome = "Dzień dobry!";
 var date = new Date();
-if (date.getHours() >= 18){
+if (date.getHours() >= 18 || date.getHours() < 5) {
     welcome = "Dobry wieczór!";
 }
-document.querySelector(".welcome").innerHTML = welcome;
+var welcomeEl = document.querySelector(".welcome");
+if (welcomeEl) welcomeEl.innerHTML = welcome;
 
-// Funkcja przekierowania do home.html z parametrami
-function toHome(){
-    location.href = 'home.html?' + params.toString();
+// Obsługa logowania hasłem (dowolne hasło lub puste kliknięcie)
+var loginBtn = document.querySelector(".login");
+if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+        toHome();
+    });
 }
 
-// Obsługa Enter w polu hasła
 var input = document.querySelector(".password_input");
-input.addEventListener("keypress", (event) => {
-    if (event.key === 'Enter') {
-        document.activeElement.blur();
-    }
-});
+if (input) {
+    input.addEventListener("keypress", (event) => {
+        if (event.key === 'Enter') {
+            toHome();
+        }
+    });
+}
 
 // Logika maskowania hasła
-var dot = "•";
-var original = "";
 var eye = document.querySelector(".eye");
-
-input.addEventListener("input", () => {
-    var value = input.value.toString();
-    var char = value.substring(value.length - 1);
-
-    if (value.length < original.length){
-        // Usunięto znak
-        original = original.substring(0, original.length - 1);
-    } else {
-        // Dodano nowy znak
-        original = original + char;
-    }
-
-    if (!eye.classList.contains("eye_close")){
-        var dots = "";
-        for (var i = 0; i < value.length - 1; i++){
-            dots += dot;
+if (eye && input) {
+    eye.addEventListener('click', () => {
+        if (input.type === 'password') {
+            input.type = 'text';
+            eye.classList.add("eye_close");
+        } else {
+            input.type = 'password';
+            eye.classList.remove("eye_close");
         }
-        input.value = dots + char;
-
-        delay(3000).then(() => {
-            if (input.value.length !== 0){
-                input.value = input.value.substring(0, input.value.length - 1) + dot;
-            }
-        });
-    }
-});
-
-// Funkcja delay
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
+    });
 }
 
-// Przełącznik oka
-eye.addEventListener('click', () => {
-    var classlist = eye.classList;
-    if (classlist.contains("eye_close")){
-        classlist.remove("eye_close");
-        var dots = "";
-        for (var i = 0; i < input.value.length; i++){
-            dots += dot;
+// Logika Face ID
+let faceIdTimeout = null;
+
+function startFaceID() {
+    const modal = document.getElementById('faceIdModal');
+    const pulse = document.getElementById('faceIdPulse');
+    const icon = document.getElementById('faceIdIcon');
+    const check = document.getElementById('faceIdCheck');
+    const subtitle = document.getElementById('faceIdSubtitle');
+
+    if (!modal) {
+        toHome();
+        return;
+    }
+
+    modal.classList.add('active');
+    pulse.style.display = 'block';
+    icon.style.display = 'block';
+    check.style.display = 'none';
+    subtitle.textContent = "Skanowanie twarzy...";
+
+    if (faceIdTimeout) clearTimeout(faceIdTimeout);
+
+    // Symulacja skanowania Face ID trwająca ~1 sekundę
+    faceIdTimeout = setTimeout(() => {
+        pulse.style.display = 'none';
+        icon.style.display = 'none';
+        check.style.display = 'block';
+        subtitle.textContent = "Zweryfikowano pomyślnie";
+
+        if (navigator.vibrate) {
+            try { navigator.vibrate([40, 60, 40]); } catch(e) {}
         }
-        input.value = dots;
-    } else {
-        classlist.add("eye_close");
-        input.value = original;
+
+        setTimeout(() => {
+            toHome();
+        }, 500);
+    }, 1100);
+}
+
+function cancelFaceID() {
+    const modal = document.getElementById('faceIdModal');
+    if (modal) modal.classList.remove('active');
+    if (faceIdTimeout) clearTimeout(faceIdTimeout);
+}
+
+// Automatyczne uruchomienie Face ID na urządzeniach Apple / mobile
+window.addEventListener('DOMContentLoaded', () => {
+    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    // Uruchom Face ID automatycznie na telefonie
+    if (isIos || isStandalone || window.innerWidth <= 600) {
+        setTimeout(() => {
+            startFaceID();
+        }, 400);
     }
 });

