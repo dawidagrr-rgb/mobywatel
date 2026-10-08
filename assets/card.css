@@ -89,16 +89,16 @@ body {
 
 /* Karta mDowód */
 .id_card_container {
-    width: calc(100% - 32px);
-    max-width: 382px;
-    margin: 0 auto 20px auto;
-    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.45));
+    width: calc(100% - 24px);
+    max-width: 400px;
+    margin: 0 auto 16px auto;
+    filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.5));
 }
 
 .id_image_data {
     border-radius: 22px 22px 0 0;
     background: url('images/plate.png') no-repeat center top / cover;
-    height: 385px;
+    height: 370px;
     position: relative;
     overflow: hidden;
 }
@@ -106,10 +106,10 @@ body {
 /* Zdjęcie użytkownika */
 .id_own_image {
     position: absolute;
-    top: 18px;
-    left: 18px;
-    width: 124px;
-    height: 160px;
+    top: 16px;
+    left: 14px;
+    width: 130px;
+    height: 168px;
     border-radius: 14px;
     background-size: cover;
     background-position: center;
@@ -121,9 +121,9 @@ body {
 /* Flaga Polski */
 .flag_video {
     position: absolute;
-    top: 196px;
-    left: 18px;
-    width: 54px;
+    top: 200px;
+    left: 14px;
+    width: 56px;
     height: auto;
     border-radius: 4px;
 }
@@ -131,20 +131,20 @@ body {
 /* Godło i tekst */
 .eagle_section {
     position: absolute;
-    top: 245px;
-    left: 18px;
+    top: 250px;
+    left: 14px;
     display: flex;
     align-items: center;
     gap: 7px;
 }
 
 .eagle_video {
-    width: 24px;
+    width: 26px;
     height: auto;
 }
 
 .eagle_text {
-    font-size: 10.5px;
+    font-size: 11px;
     line-height: 13px;
     color: #505766;
     font-weight: 500;
@@ -153,12 +153,12 @@ body {
 /* Kolumna danych osobowych */
 .id_data_grid {
     position: absolute;
-    top: 16px;
+    top: 14px;
     left: 158px;
-    right: 16px;
+    right: 14px;
     display: flex;
     flex-direction: column;
-    gap: 11px;
+    gap: 12px;
 }
 
 .data_holder {
@@ -167,7 +167,7 @@ body {
 }
 
 .data_title {
-    font-size: 15.5px;
+    font-size: 16px;
     font-weight: 700;
     color: #171b22;
     text-transform: uppercase;
@@ -175,7 +175,7 @@ body {
 }
 
 .data_value {
-    font-size: 11px;
+    font-size: 11.5px;
     color: #586070;
     margin-top: 1px;
     font-weight: 400;
