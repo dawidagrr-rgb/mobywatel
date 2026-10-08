@@ -86,95 +86,20 @@ html.theme-light .main_button {
 }
 
 /* Dolny pasek nawigacji */
-.bottom_element_image {
-    pointer-events: none;
-    width: 24px;
-    height: 24px;
-    background-position: center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: auto;
-    margin-bottom: 2px;
-    transition: all 0.2s ease;
-}
-
-/* Domyślne nieaktywne ikony */
-.home { background-image: url('images/documents.png') !important; }
-.services { background-image: url('images/services.png') !important; }
-.qr { background-image: url('images/identity.png') !important; }
-.search_nav { background-image: url('images/search.png') !important; }
-.more { background-image: url('images/other.png') !important; }
-
-/* Aktywne ikony dla aktywnej karty */
-.bottom_element_grid.active .home,
-.home_open {
-    background-image: url('images/documents_open.png') !important;
-}
-
-.bottom_element_grid.active .services,
-.services_open {
-    background-image: url('images/services_open.png') !important;
-}
-
-.bottom_element_grid.active .qr,
-.qr_open {
-    background-image: url('images/identity_open.png') !important;
-}
-
-.bottom_element_grid.active .search_nav {
-    background-image: url('images/search.png') !important;
-}
-
-.bottom_element_grid.active .more,
-.more_open {
-    background-image: url('images/other_open.png') !important;
-}
-
-/* Wymuszenie szarych ikon dla nieaktywnych kart */
-.bottom_element_grid:not(.active) .home { background-image: url('images/documents.png') !important; }
-.bottom_element_grid:not(.active) .services { background-image: url('images/services.png') !important; }
-.bottom_element_grid:not(.active) .qr { background-image: url('images/identity.png') !important; }
-.bottom_element_grid:not(.active) .search_nav { background-image: url('images/search.png') !important; }
-.bottom_element_grid:not(.active) .more { background-image: url('images/other.png') !important; }
-
-.bottom_element_grid {
-    margin-top: 3px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+.bottom_bar {
+    position: fixed;
+    background-color: var(--bg-bar, #101318);
+    border-top: 1px solid var(--border-color, rgba(255, 255, 255, 0.08));
+    bottom: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-}
-
-.bottom_element_text {
-    margin-top: 2px;
-    font-size: 10.5px;
-    color: var(--text-secondary);
-    font-weight: 500;
-    text-align: center;
-}
-
-.bottom_element_grid.active .bottom_element_text,
-.bottom_element_text.open {
-    color: var(--accent-blue);
-    font-weight: 600;
-}
-
-.bottom_element_grid.active .bottom_element_image {
-    background-color: var(--active-pill) !important;
-    border-radius: 14px !important;
-    padding: 3px 18px !important;
-    box-sizing: content-box !important;
-}
-
-.bottom_element_grid:not(.active) .bottom_element_image {
-    background-color: transparent !important;
-    padding: 3px 0 !important;
+    height: 72px;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    padding-bottom: env(safe-area-inset-bottom);
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .bottom_bar_grid {
@@ -186,18 +111,56 @@ html.theme-light .main_button {
     margin: 0 auto;
 }
 
-.bottom_bar {
-    position: fixed;
-    background-color: var(--bg-bar);
-    border-top: 1px solid var(--border-color);
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 74px;
-    z-index: 999;
+.bottom_element_grid {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    padding-bottom: env(safe-area-inset-bottom);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+    padding-top: 2px;
+    background: none;
+    border: none;
+}
+
+.bottom_icon_pill {
+    width: 48px;
+    height: 26px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+    transition: background-color 0.15s ease;
+    background-color: transparent;
+}
+
+.bottom_element_grid.active .bottom_icon_pill {
+    background-color: var(--active-pill, #0d2856) !important;
+}
+
+.bottom_element_grid.active svg {
+    color: var(--accent-blue, #388af6) !important;
+    stroke: var(--accent-blue, #388af6) !important;
+}
+
+.bottom_element_grid:not(.active) svg {
+    color: var(--text-secondary, #8c92a0) !important;
+    stroke: var(--text-secondary, #8c92a0) !important;
+}
+
+.bottom_element_text {
+    font-size: 10px;
+    line-height: 12px;
+    color: var(--text-secondary, #8c92a0);
+    font-weight: 500;
+    text-align: center;
+    margin: 0;
+    transition: color 0.15s ease;
+}
+
+.bottom_element_grid.active .bottom_element_text,
+.bottom_element_text.open {
+    color: var(--accent-blue, #388af6) !important;
+    font-weight: 600;
 }
