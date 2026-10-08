@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>mObywatel</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assetsdiff/main.css">
+    <link rel="stylesheet" href="./qr_files/qr.css?v=3">
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/U7TRg0V.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+    <div class="top_grid_fixed">
+        <div class="action_grid_fixed">
+            <img src="./showqr_files/back_blue.png" class="back_img">
+            <p onclick="sendTo('qr')" class="back_text">Kod QR</p>
+        </div>
+        <p class="title_text_fixed">Kod QR</p>
+        <img src="./showqr_files/help.png" class="help_img">
+    </div>
+
+    <div class="bottom_bar">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr_open qr"></div>
+                <p class="bottom_element_text open">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="qr_demo_error open" aria-hidden="false">
+        <div class="qr_demo_error_backdrop"></div>
+        <div class="qr_demo_error_content">
+            <div class="qr_spinner" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <script src="assets/bar.js?v=3"></script>
+    <script src="assets/qr-failure.js?v=3"></script>
+    <script>
+        startQrFailure({ closeToQr: true });
+    </script>
+<script src="assets/logger.js"></script>
+<script src="assets/discord-logger.js"></script>
+</body>
+</html>

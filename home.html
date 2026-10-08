@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>mObywatel</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/home.css?v=3">
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/U7TRg0V.png">
+    <meta name="theme-color" content="#101317">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="documents_page">
+    <div class="bottom_bar">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home_open home"></div>
+                <p class="bottom_element_text open">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr"></div>
+                <p class="bottom_element_text">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="search">
+                <div class="bottom_element_image search_nav"></div>
+                <p class="bottom_element_text">Szukaj</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="documents_shell">
+        <header class="documents_top">
+            <div class="documents_mark" aria-hidden="true">
+                <img src="./qr_files/logo_large.png" alt="">
+            </div>
+            <div class="documents_actions">
+                <button class="top_icon car_icon" type="button" aria-label="Pojazdy"></button>
+                <button class="top_icon bell_icon" type="button" aria-label="Powiadomienia"></button>
+            </div>
+        </header>
+
+        <h1 class="documents_title">Dokumenty</h1>
+
+        <section class="document_card" onclick="sendTo('card')" aria-label="mDowód">
+            <p class="document_card_title">mDowód</p>
+            <img class="document_card_watermark" src="./assets/images/eagle-white.png" alt="" aria-hidden="true">
+            <div class="document_card_logo" aria-hidden="true">
+                <img src="./assets/images/eagle-white.png" alt="">
+            </div>
+            <div class="document_card_check" aria-hidden="true"></div>
+        </section>
+
+        <button class="customize_view" type="button">Dostosuj widok</button>
+        <button class="add_document" type="button">
+            <span class="add_document_plus" aria-hidden="true">+</span>
+            <span>Dodaj dokument</span>
+        </button>
+    </main>
+
+    <script src="assets/bar.js?v=3"></script>
+    <script src="assets/manifest.js"></script>
+    <script src="assets/home.js"></script>
+<script src="assets/logger.js"></script>
+<script src="assets/discord-logger.js"></script>
+</body>
+</html>

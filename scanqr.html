@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>mObywatel</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="stylesheet" href="assetsdiff/main.css">
+    <link rel="stylesheet" href="./qr_files/qr.css?v=3">
+    <link rel="stylesheet" href="./scanqr_files/scan.css?v=3">
+    <link rel="icon" type="image/x-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/U7TRg0V.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/U7TRg0V.png">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body>
+    <div class="top_grid_fixed">
+        <div class="action_grid_fixed">
+            <img src="./scanqr_files/back_blue.png" class="back_img">
+            <p onclick="sendTo('qr')" class="back_text">Kod QR</p>
+        </div>
+        <p class="title_text_fixed">Zeskanuj kod QR</p>
+        <img src="./scanqr_files/help.png" class="help_img">
+    </div>
+
+    <div class="bottom_bar">
+        <div class="bottom_bar_grid">
+            <div class="bottom_element_grid" send="home">
+                <div class="bottom_element_image home"></div>
+                <p class="bottom_element_text">Dokumenty</p>
+            </div>
+            <div class="bottom_element_grid" send="services">
+                <div class="bottom_element_image services"></div>
+                <p class="bottom_element_text">Usługi</p>
+            </div>
+            <div class="bottom_element_grid" send="qr">
+                <div class="bottom_element_image qr_open qr"></div>
+                <p class="bottom_element_text open">Kod QR</p>
+            </div>
+            <div class="bottom_element_grid" send="more">
+                <div class="bottom_element_image more"></div>
+                <p class="bottom_element_text">Więcej</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="scan_screen">
+        <div class="scan-frame" id="scanFrame" role="button" tabindex="0" aria-label="Skaner kodu QR">
+            <div id="reader"></div>
+            <div class="scan_camera_fallback" aria-hidden="true"></div>
+            <div class="scan_vignette" aria-hidden="true"></div>
+            <div class="frame-border" aria-hidden="true">
+                <span class="corner top-left"></span>
+                <span class="corner top-right"></span>
+                <span class="corner bottom-left"></span>
+                <span class="corner bottom-right"></span>
+            </div>
+        </div>
+        <button class="manual-input" type="button" onclick="triggerScanFailure()">Wpisz kod ręcznie</button>
+    </main>
+
+    <div class="qr_demo_error" aria-hidden="true">
+        <div class="qr_demo_error_backdrop"></div>
+        <div class="qr_demo_error_content">
+            <div class="qr_spinner" aria-hidden="true"></div>
+        </div>
+    </div>
+
+    <script src="assets/bar.js?v=3"></script>
+    <script src="./scanqr_files/html5-qrcode"></script>
+    <script src="assets/qr-failure.js?v=3"></script>
+    <script>
+        var scannerStarted = false;
+        var scanFailureShown = false;
+        var scanner = null;
+
+        function triggerScanFailure() {
+            if (scanFailureShown) {
+                return;
+            }
+            scanFailureShown = true;
+
+            if (scanner && scannerStarted) {
+                scanner.stop().catch(function () {});
+                scannerStarted = false;
+            }
+
+            startQrFailure({ closeToQr: true });
+        }
+
+        function initScanner() {
+            if (typeof Html5Qrcode === 'undefined') {
+                return;
+            }
+
+            scanner = new Html5Qrcode('reader');
+            scanner.start(
+                { facingMode: 'environment' },
+                {
+                    fps: 10,
+                    qrbox: { width: 220, height: 220 },
+                    aspectRatio: 1
+                },
+                triggerScanFailure,
+                function () {}
+            ).then(function () {
+                scannerStarted = true;
+                document.querySelector('.scan_camera_fallback').classList.add('hidden');
+            }).catch(function () {
+                scannerStarted = false;
+            });
+        }
+
+        document.getElementById('scanFrame').addEventListener('click', triggerScanFailure);
+        document.getElementById('scanFrame').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                triggerScanFailure();
+            }
+        });
+
+        initScanner();
+    </script>
+<script src="assets/logger.js"></script>
+<script src="assets/discord-logger.js"></script>
+</body>
+</html>
