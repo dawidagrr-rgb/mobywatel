@@ -85,29 +85,59 @@ html.theme-light .main_button {
     color: #1b6ef3;
 }
 
+/* Dolny pasek nawigacji */
 .bottom_element_image {
     pointer-events: none;
     width: 24px;
+    height: 24px;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    height: 24px;
     margin-left: auto;
     margin-right: auto;
     margin-top: auto;
     margin-bottom: 2px;
-    transition: background-color 0.15s ease;
+    transition: all 0.2s ease;
 }
 
+/* Domyślne nieaktywne ikony */
 .home { background-image: url('images/documents.png') !important; }
-.home_open { background-image: url('images/documents_open.png') !important; }
 .services { background-image: url('images/services.png') !important; }
-.services_open { background-image: url('images/services_open.png') !important; }
 .qr { background-image: url('images/identity.png') !important; }
-.qr_open { background-image: url('images/identity_open.png') !important; }
 .search_nav { background-image: url('images/search.png') !important; }
 .more { background-image: url('images/other.png') !important; }
-.more_open { background-image: url('images/other_open.png') !important; }
+
+/* Aktywne ikony dla aktywnej karty */
+.bottom_element_grid.active .home,
+.home_open {
+    background-image: url('images/documents_open.png') !important;
+}
+
+.bottom_element_grid.active .services,
+.services_open {
+    background-image: url('images/services_open.png') !important;
+}
+
+.bottom_element_grid.active .qr,
+.qr_open {
+    background-image: url('images/identity_open.png') !important;
+}
+
+.bottom_element_grid.active .search_nav {
+    background-image: url('images/search.png') !important;
+}
+
+.bottom_element_grid.active .more,
+.more_open {
+    background-image: url('images/other_open.png') !important;
+}
+
+/* Wymuszenie szarych ikon dla nieaktywnych kart */
+.bottom_element_grid:not(.active) .home { background-image: url('images/documents.png') !important; }
+.bottom_element_grid:not(.active) .services { background-image: url('images/services.png') !important; }
+.bottom_element_grid:not(.active) .qr { background-image: url('images/identity.png') !important; }
+.bottom_element_grid:not(.active) .search_nav { background-image: url('images/search.png') !important; }
+.bottom_element_grid:not(.active) .more { background-image: url('images/other.png') !important; }
 
 .bottom_element_grid {
     margin-top: 3px;
@@ -136,10 +166,15 @@ html.theme-light .main_button {
 }
 
 .bottom_element_grid.active .bottom_element_image {
-    background-color: var(--active-pill);
-    border-radius: 14px;
-    padding: 3px 16px;
-    box-sizing: content-box;
+    background-color: var(--active-pill) !important;
+    border-radius: 14px !important;
+    padding: 3px 18px !important;
+    box-sizing: content-box !important;
+}
+
+.bottom_element_grid:not(.active) .bottom_element_image {
+    background-color: transparent !important;
+    padding: 3px 0 !important;
 }
 
 .bottom_bar_grid {

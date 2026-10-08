@@ -303,7 +303,7 @@
                 const card = document.createElement('div');
                 card.className = 'wallet-card' + (selected.length === 1 ? ' single-card' : '');
                 card.style.background = def.bg;
-                card.onclick = () => location.href = def.url;
+                card.onclick = () => sendTo(def.url);
                 card.innerHTML = `
                     <div class="wallet-card-name">${def.name}</div>
                     <div class="wallet-card-badge">${def.badge}</div>

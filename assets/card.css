@@ -441,10 +441,15 @@ body {
 }
 
 .bottom_element_grid.active .bottom_element_image {
-    background-color: var(--active-pill, #0d2856);
-    border-radius: 14px;
-    padding: 3px 16px;
-    box-sizing: content-box;
+    background-color: var(--active-pill, #0d2856) !important;
+    border-radius: 14px !important;
+    padding: 3px 18px !important;
+    box-sizing: content-box !important;
+}
+
+.bottom_element_grid:not(.active) .bottom_element_image {
+    background-color: transparent !important;
+    padding: 3px 0 !important;
 }
 
 .bottom_element_text {

@@ -14,6 +14,7 @@
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="mObywatel">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#101419">
     <link rel="manifest" href="./manifest.json">
@@ -31,8 +32,8 @@
             <div class="help_icon_btn" onclick="sendTo('more')">?</div>
         </header>
 
-        <!-- Aktualny czas i data -->
-        <p class="time_text" id="time">Czas: 03:24:22 25.08.2025</p>
+        <!-- Czas na żywo -->
+        <p class="time_text" id="time">Czas: 12:00:00 08.10.2026</p>
 
         <!-- Karta mDowód (część górna z giloszem) -->
         <div class="id_card_container">
@@ -52,11 +53,11 @@
                 <!-- Dane osobowe (prawa kolumna) -->
                 <div class="id_data_grid">
                     <div class="data_holder">
-                        <p class="data_title" id="name">YOBYWATEL</p>
+                        <p class="data_title" id="name">JAN</p>
                         <p class="data_value">Imię (imiona)</p>
                     </div>
                     <div class="data_holder">
-                        <p class="data_title" id="surname">YOBYWATEL</p>
+                        <p class="data_title" id="surname">KOWALSKI</p>
                         <p class="data_value">Nazwisko</p>
                     </div>
                     <div class="data_holder">
@@ -83,32 +84,36 @@
             </div>
         </div>
 
-        <!-- 4 Skróty pod kartą -->
+        <!-- 4 Skróty pod kartą z lokalnymi ikonami -->
         <div class="top-buttons">
             <button onclick="sendTo('qr')" class="shortcut-btn">
                 <div class="icon-circle">
-                    <img src="https://i.imgur.com/DGBsoYY.png" alt="Potwierdź">
+                    <img src="assets/images/confirm.png" alt="Potwierdź">
                 </div>
                 <span>Potwierdź<br>swoje dane</span>
             </button>
 
             <button onclick="sendTo('moreid')" class="shortcut-btn">
                 <div class="icon-circle">
-                    <img src="https://i.imgur.com/2SPOxrW.png" alt="Dowód">
+                    <img src="assets/images/card.png" alt="Dowód">
                 </div>
                 <span>Dane<br>dowodu<br>osobistego</span>
             </button>
 
             <button onclick="sendTo('pesel')" class="shortcut-btn">
                 <div class="icon-circle">
-                    <img src="https://i.imgur.com/aDXGRtB.png" alt="PESEL">
+                    <img src="assets/images/pesel.png" alt="PESEL">
                 </div>
                 <span>Zastrzeż<br>PESEL</span>
             </button>
 
             <button onclick="sendTo('shortcuts')" class="shortcut-btn">
                 <div class="icon-circle">
-                    <img src="https://i.imgur.com/KYGZHxe.png" alt="Więcej">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8c93a0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="1.5"></circle>
+                        <circle cx="19" cy="12" r="1.5"></circle>
+                        <circle cx="5" cy="12" r="1.5"></circle>
+                    </svg>
                 </div>
                 <span>Pozostałe<br>skróty</span>
             </button>
@@ -127,22 +132,22 @@
 
             <div class="field">
                 <label>Termin ważności</label>
-                <strong class="mdow_expiry_date_value" id="expiryDate">01.01.2022</strong>
+                <strong class="mdow_expiry_date_value" id="expiryDate">14.07.2028</strong>
             </div>
 
             <div class="field">
                 <label>Data wydania</label>
-                <strong class="mdow_issue_date_value" id="issueDate">01.01.2017</strong>
+                <strong class="mdow_issue_date_value" id="issueDate">14.07.2023</strong>
             </div>
 
             <div class="field">
                 <label>Imię ojca</label>
-                <strong class="father_name_value" id="fatherName">YOBYWATEL</strong>
+                <strong class="father_name_value" id="fatherName">JAN</strong>
             </div>
 
             <div class="field">
                 <label>Imię matki</label>
-                <strong class="mother_name_value" id="motherName">YOBYWATEL</strong>
+                <strong class="mother_name_value" id="motherName">ANNA</strong>
             </div>
         </div>
 
@@ -155,7 +160,7 @@
             <div class="additional_holder" id="additionalHolder">
                 <div class="additional_grid">
                     <p class="additional_title">Nazwisko rodowe</p>
-                    <p class="additional_subtitle" id="familyName">YOBYWATEL</p>
+                    <p class="additional_subtitle" id="familyName">KOWALSKI</p>
                 </div>
                 <div class="additional_grid">
                     <p class="additional_title">Płeć</p>
@@ -163,11 +168,11 @@
                 </div>
                 <div class="additional_grid">
                     <p class="additional_title">Nazwisko rodowe ojca</p>
-                    <p class="additional_subtitle" id="fathersFamilyName">YOBYWATEL</p>
+                    <p class="additional_subtitle" id="fathersFamilyName">KOWALSKI</p>
                 </div>
                 <div class="additional_grid">
                     <p class="additional_title">Nazwisko rodowe matki</p>
-                    <p class="additional_subtitle" id="mothersFamilyName">YOBYWATEL</p>
+                    <p class="additional_subtitle" id="mothersFamilyName">NOWAK</p>
                 </div>
                 <div class="additional_grid">
                     <p class="additional_title">Miejsce urodzenia</p>
@@ -192,7 +197,7 @@
         <div class="custom-card update-card">
             <div class="update-info">
                 <p class="update-title">Ostatnia aktualizacja</p>
-                <p class="update-date" id="lastUpdate">24.12.2024</p>
+                <p class="update-date" id="lastUpdate">08.10.2026</p>
             </div>
             <button type="button" class="copy-btn update-btn" onclick="updateCurrentDate()">Aktualizuj</button>
         </div>
@@ -204,7 +209,7 @@
     <nav class="bottom_bar">
         <div class="bottom_bar_grid">
             <div class="bottom_element_grid active" onclick="sendTo('home')">
-                <div class="bottom_element_image home_open"></div>
+                <div class="bottom_element_image home_open home"></div>
                 <p class="bottom_element_text open">Dokumenty</p>
             </div>
             <div class="bottom_element_grid" onclick="sendTo('services')">
@@ -228,7 +233,6 @@
 
     <script src="assets/bar.js"></script>
     <script>
-        // Zegar czasu rzeczywistego
         function updateClock() {
             const now = new Date();
             const timeStr = now.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -243,7 +247,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Kopiowanie tekstu
         function copyText(id) {
             const el = document.getElementById(id);
             if (el && navigator.clipboard) {
@@ -252,7 +255,6 @@
             }
         }
 
-        // Aktualizuj datę
         function updateCurrentDate() {
             const now = new Date();
             const day = String(now.getDate()).padStart(2, '0');
@@ -263,7 +265,6 @@
             localStorage.setItem('mobywatel_last_update', dateStr);
         }
 
-        // Rozwijanie akordeonu
         function toggleAccordion() {
             const holder = document.getElementById('additionalHolder');
             const arrow = document.getElementById('accordionArrow');
@@ -277,68 +278,25 @@
             }
         }
 
-        // Odczyt danych z URL lub LocalStorage z autentycznymi wartościami domyślnymi
-        function loadCardData() {
-            let data = {};
-
-            // 1. Sprawdź parametry URL
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('name') || urlParams.has('pesel')) {
-                urlParams.forEach((value, key) => { data[key] = value; });
-                try { localStorage.setItem('mobywatel_card_data', JSON.stringify(data)); } catch(e) {}
-            } else {
-                // 2. Sprawdź localStorage
-                const saved = localStorage.getItem('mobywatel_card_data');
-                if (saved) {
-                    try { data = JSON.parse(saved); } catch(e) {}
-                }
-            }
-
-            // Domyślne wartości z autentycznego mDowodu (jeśli użytkownik nic nie wpisał)
-            const defaults = {
-                name: 'YOBYWATEL',
-                surname: 'YOBYWATEL',
-                nationality: 'POLSKIE',
-                birthday: '01.01.1999',
-                pesel: '99010102957',
-                mdow_series: 'DXMR 56087',
-                expiry_date: '01.01.2022',
-                issue_date: '01.01.2017',
-                father_name: 'YOBYWATEL',
-                mother_name: 'YOBYWATEL',
-                family_name: 'YOBYWATEL',
-                sex: 'Mężczyzna',
-                fathersFamilyName: 'YOBYWATEL',
-                mothersFamilyName: 'YOBYWATEL',
-                birthPlace: 'Warszawa',
-                birth_country: 'Polska',
-                adress1: 'Chopina 4/56',
-                adress2: '42-250',
-                city: 'Warszawa',
-                home_date: '01.01.2000'
-            };
-
-            const finalData = Object.assign({}, defaults, data);
-
-            // Wstaw dane tekstowe
+        function applyDataToDOM(finalData) {
             if (document.getElementById('name')) document.getElementById('name').textContent = (finalData.name || '').toUpperCase();
             if (document.getElementById('surname')) document.getElementById('surname').textContent = (finalData.surname || '').toUpperCase();
             if (document.getElementById('nationality')) document.getElementById('nationality').textContent = (finalData.nationality || 'POLSKIE').toUpperCase();
             if (document.getElementById('birthday')) document.getElementById('birthday').textContent = finalData.birthday || '';
             if (document.getElementById('pesel')) document.getElementById('pesel').textContent = finalData.pesel || '';
 
-            if (document.getElementById('mdowSeries')) document.getElementById('mdowSeries').textContent = finalData.mdow_series || '';
-            if (document.getElementById('expiryDate')) document.getElementById('expiryDate').textContent = finalData.expiry_date || '';
-            if (document.getElementById('issueDate')) document.getElementById('issueDate').textContent = finalData.issue_date || '';
-            if (document.getElementById('fatherName')) document.getElementById('fatherName').textContent = finalData.father_name || '';
-            if (document.getElementById('motherName')) document.getElementById('motherName').textContent = finalData.mother_name || '';
+            if (document.getElementById('mdowSeries')) document.getElementById('mdowSeries').textContent = finalData.mdow_series || finalData.seriesAndNumber || 'DXMR 56087';
+            if (document.getElementById('expiryDate')) document.getElementById('expiryDate').textContent = finalData.expiry_date || finalData.expiryDate || '14.07.2028';
+            if (document.getElementById('issueDate')) document.getElementById('issueDate').textContent = finalData.issue_date || finalData.givenDate || '14.07.2023';
+            if (document.getElementById('fatherName')) document.getElementById('fatherName').textContent = finalData.father_name || finalData.fatherName || '';
+            if (document.getElementById('motherName')) document.getElementById('motherName').textContent = finalData.mother_name || finalData.motherName || '';
 
-            if (document.getElementById('familyName')) document.getElementById('familyName').textContent = finalData.family_name || '';
+            if (document.getElementById('familyName')) document.getElementById('familyName').textContent = finalData.family_name || finalData.familyName || '';
             if (document.getElementById('sex')) {
                 let s = finalData.sex || '';
                 if (s.toLowerCase() === 'm' || s.toLowerCase().includes('męż')) s = 'Mężczyzna';
                 else if (s.toLowerCase() === 'k' || s.toLowerCase().includes('kob')) s = 'Kobieta';
-                document.getElementById('sex').textContent = s;
+                document.getElementById('sex').textContent = s || 'Mężczyzna';
             }
             if (document.getElementById('fathersFamilyName')) document.getElementById('fathersFamilyName').textContent = finalData.fathersFamilyName || finalData.father_family_name || '';
             if (document.getElementById('mothersFamilyName')) document.getElementById('mothersFamilyName').textContent = finalData.mothersFamilyName || finalData.mother_family_name || '';
@@ -348,17 +306,17 @@
 
             if (document.getElementById('adress')) {
                 const parts = [finalData.adress1 ? `ul. ${finalData.adress1}` : '', `${finalData.adress2 || ''} ${finalData.city || ''}`.trim()].filter(Boolean);
-                document.getElementById('adress').innerHTML = parts.join('<br>') || 'Brak danych';
+                document.getElementById('adress').innerHTML = parts.length ? parts.join('<br>') : (finalData.address || 'ul. Chopina 4/56<br>42-250 Warszawa');
             }
 
-            // Zdjęcie użytkownika
             const photoEl = document.getElementById('userPhoto');
             const photoVal = finalData.photoUrl || finalData.image;
             if (photoEl) {
                 if (photoVal && photoVal.length > 20) {
                     photoEl.style.backgroundImage = `url('${photoVal}')`;
+                    photoEl.style.backgroundSize = "cover";
+                    photoEl.style.backgroundColor = "transparent";
                 } else {
-                    // Domyślne zdjęcie orła lub wzorcowe
                     photoEl.style.backgroundImage = "url('assets/images/eagle-white.png')";
                     photoEl.style.backgroundSize = "75%";
                     photoEl.style.backgroundColor = "#525968";
@@ -371,6 +329,100 @@
             }
         }
 
+        async function loadCardData() {
+            let data = {};
+
+            // 1. Zbadaj parametry URL
+            const urlParams = new URLSearchParams(window.location.search);
+            let hasUrlParam = false;
+            urlParams.forEach((val, k) => {
+                if (val && val !== 'null' && val !== 'undefined') {
+                    data[k] = val;
+                    hasUrlParam = true;
+                }
+            });
+
+            // 2. Jeśli brak w URL, zbadaj localStorage 'mobywatel_card_data'
+            if (!data.name || !data.surname) {
+                const saved = localStorage.getItem('mobywatel_card_data');
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        data = Object.assign({}, parsed, data);
+                    } catch(e) {}
+                }
+            }
+
+            // 3. Sprawdź pojedyncze klucze z generatora
+            if (!data.name && localStorage.getItem('name')) data.name = localStorage.getItem('name');
+            if (!data.surname && localStorage.getItem('surname')) data.surname = localStorage.getItem('surname');
+            if (!data.pesel && localStorage.getItem('pesel')) data.pesel = localStorage.getItem('pesel');
+            if (!data.birthday && localStorage.getItem('birthDay')) data.birthday = localStorage.getItem('birthDay');
+            if (!data.photoUrl && localStorage.getItem('image')) data.photoUrl = localStorage.getItem('image');
+
+            // 4. Sprawdź IndexedDB 'fobywatel' jeśli nadal brak
+            if (!data.name || !data.surname) {
+                try {
+                    const dbReq = window.indexedDB.open('fobywatel', 1);
+                    dbReq.onsuccess = (e) => {
+                        const db = e.target.result;
+                        if (db.objectStoreNames.contains('data')) {
+                            const tx = db.transaction('data', 'readonly');
+                            const store = tx.objectStore('data');
+                            const getReq = store.get('data');
+                            getReq.onsuccess = () => {
+                                if (getReq.result) {
+                                    data = Object.assign({}, getReq.result, data);
+                                    applyDataToDOM(data);
+                                }
+                            };
+                            const imgReq = store.get('image');
+                            imgReq.onsuccess = () => {
+                                if (imgReq.result && imgReq.result.image) {
+                                    data.photoUrl = imgReq.result.image;
+                                    applyDataToDOM(data);
+                                }
+                            };
+                        }
+                    };
+                } catch(e) {}
+            }
+
+            // Domyślne wartości
+            const defaults = {
+                name: 'JAN',
+                surname: 'KOWALSKI',
+                nationality: 'POLSKIE',
+                birthday: '01.01.1999',
+                pesel: '99010102957',
+                mdow_series: 'DXMR 56087',
+                expiry_date: '14.07.2028',
+                issue_date: '14.07.2023',
+                father_name: 'JAN',
+                mother_name: 'ANNA',
+                family_name: 'KOWALSKI',
+                sex: 'Mężczyzna',
+                fathersFamilyName: 'KOWALSKI',
+                mothersFamilyName: 'NOWAK',
+                birthPlace: 'Warszawa',
+                birth_country: 'Polska',
+                adress1: 'Chopina 4/56',
+                adress2: '42-250',
+                city: 'Warszawa',
+                home_date: '01.01.2000'
+            };
+
+            const finalData = Object.assign({}, defaults, data);
+
+            // Zapisz do localStorage by utrzymać stan po dodaniu do ekranu głównego (PWA)
+            if (data.name && data.name !== 'YOBYWATEL') {
+                try { localStorage.setItem('mobywatel_card_data', JSON.stringify(finalData)); } catch(e) {}
+            }
+
+            applyDataToDOM(finalData);
+        }
+
+        loadCardData();
         window.addEventListener('DOMContentLoaded', loadCardData);
     </script>
 </body>
